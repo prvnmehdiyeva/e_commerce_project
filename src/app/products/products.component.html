@@ -1,0 +1,38 @@
+<app-productbasket></app-productbasket>
+
+
+<div class="btn-group" role="group" aria-label="Basic outlined example">
+  <div>
+    <button type="button" class="btn btn-outline-secondary" (click)="changeCategory(null)" [class.active]="selectedCategory === null"><strong>All Products</strong></button>
+    <ng-container *ngFor="let c of category">
+      <button type="button" class="btn btn-outline-secondary capitalize-first-letter" (click)="changeCategory(c)" [class.active]="selectedCategory && selectedCategory.category === c">{{c}}</button>
+    </ng-container>
+  </div>
+  <div class="searchDiv">
+    <input type="text" [(ngModel)]="searchText" placeholder="Search..." class="form-control me-2" >
+    <button type="submit" class="btn btn-outline-success" (click)="searchButtonClicked()">Search</button>
+  </div>
+</div>
+  <article *ngIf="noResultsFound" class="no-results">
+    <h3>Nothing Found</h3>
+    <p>Sorry, but nothing matched your search of <strong>{{searchText}}</strong>. <br />
+      Please try again with some different keywords or show <a href="#" (click)="showAllProducts()">All Products</a></p>
+  </article>
+<!-- <app-productsearch></app-productsearch> -->
+<div class="gridcards" >
+  <mat-card class="product-card" *ngFor="let product of filteredProducts"  >
+    <div class="card" style="width: 15rem ;">
+      <img [src]="product.image" class="card-img-top" style="height: 200px;">
+      <div class="card-body">
+        <h5 class="card-title">{{ product.title.length > 16 ? product.title.substring(0, 16) + '...' : product.title }}</h5>
+        </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">{{ product.category }}</li>
+        <li class="list-group-item">Price: {{ product.price | currency }}</li>
+      </ul>
+      <div class="card-body">
+        <a class="btn btn-primary" href="#" role="button" (click)="addToBasket(product)">Add to Basket</a>
+      </div>
+    </div>
+  </mat-card> 
+</div>
